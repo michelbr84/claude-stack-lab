@@ -111,6 +111,9 @@ jobs:
       - name: Scenario 010 (full regression gate)
         run: cd apps/cli && node --import=tsx src/bin.ts run 010-full-regression --cwd "$GITHUB_WORKSPACE"
 
+      - name: Scenario 011 (lab mutation score, committed snapshot)
+        run: cd apps/cli && node --import=tsx src/bin.ts run 011-lab-mutation-score --cwd "$GITHUB_WORKSPACE"
+
       - name: Run all (single combined report)
         run: cd apps/cli && node --import=tsx src/bin.ts run all --cwd "$GITHUB_WORKSPACE"
 

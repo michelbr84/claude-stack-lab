@@ -68,6 +68,12 @@ out/
 coverage/
 .vitest-cache/
 
+# Mutation testing artifacts — scratch; only summary.json is committed,
+# the full Stryker report is regenerable on demand
+.stryker-tmp/
+reports/mutation/
+evidence/snapshots/lab-mutation/mutation.json
+
 # Lab evidence — per-run artifacts are gitignored; only baseline snapshots
 # (under evidence/snapshots/) are committed
 evidence/raw/

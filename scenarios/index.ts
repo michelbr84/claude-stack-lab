@@ -8,6 +8,7 @@ import { scenario007 } from './007-tdd-loop.js';
 import { scenario008 } from './008-awesome-claude-token-stack.js';
 import { scenario009 } from './009-refactor-module.js';
 import { scenario010 } from './010-full-regression.js';
+import { scenario011 } from './011-lab-mutation-score.js';
 
 export const scenarios = [
   scenario001,
@@ -19,5 +20,6 @@ export const scenarios = [
   scenario007,
   scenario008,
   scenario009,
-  scenario010
+  scenario010,
+  scenario011
 ];
