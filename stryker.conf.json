@@ -1,0 +1,38 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "_comment": "Mutation testing for the lab's own packages. Fixtures are intentionally skipped — they contain deliberately broken code that would poison the signal.",
+  "packageManager": "pnpm",
+  "testRunner": "vitest",
+  "plugins": [
+    "@stryker-mutator/vitest-runner"
+  ],
+  "vitest": {
+    "configFile": "vitest.config.ts"
+  },
+  "reporters": ["clear-text", "progress", "json", "html"],
+  "htmlReporter": {
+    "fileName": "reports/mutation/mutation.html"
+  },
+  "jsonReporter": {
+    "fileName": "reports/mutation/mutation.json"
+  },
+  "mutate": [
+    "packages/*/src/**/*.ts",
+    "apps/*/src/**/*.ts",
+    "!**/*.test.ts",
+    "!**/*.d.ts",
+    "!packages/*/src/index.ts",
+    "!apps/*/src/index.ts",
+    "!apps/cli/src/bin.ts"
+  ],
+  "thresholds": {
+    "high": 85,
+    "low": 65,
+    "break": 65
+  },
+  "coverageAnalysis": "perTest",
+  "concurrency": 2,
+  "timeoutMS": 30000,
+  "disableTypeChecks": true,
+  "tempDirName": ".stryker-tmp"
+}

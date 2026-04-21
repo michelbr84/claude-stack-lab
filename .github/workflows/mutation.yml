@@ -1,0 +1,75 @@
+name: lab-mutation
+
+on:
+  schedule:
+    # every Monday at 06:00 UTC
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'stryker.conf.json'
+      - 'packages/*/src/**'
+      - 'apps/*/src/**'
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lab-mutation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  mutation:
+    name: Stryker mutation run
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Stryker (mutation testing)
+        run: pnpm test:mutation
+        continue-on-error: true
+
+      - name: Regenerate summary
+        if: always()
+        run: |
+          if [ -f reports/mutation/mutation.json ]; then
+            node scripts/refresh-mutation-summary.mjs
+            cp reports/mutation/mutation.json evidence/snapshots/lab-mutation/mutation.json
+          fi
+
+      - name: Show summary
+        if: always()
+        run: |
+          if [ -f evidence/snapshots/lab-mutation/summary.json ]; then
+            jq '.totals' evidence/snapshots/lab-mutation/summary.json
+          fi
+
+      - name: Upload mutation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-mutation-${{ github.run_id }}
+          path: |
+            reports/mutation/
+            evidence/snapshots/lab-mutation/
+          if-no-files-found: warn
+          retention-days: 30

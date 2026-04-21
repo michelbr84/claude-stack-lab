@@ -18,6 +18,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:mutation": "stryker run",
     "scenario": "pnpm --filter @lab/cli run start --",
     "scenario:001": "pnpm --filter @lab/cli run start -- run 001",
     "scenario:all": "pnpm --filter @lab/cli run start -- run all",
@@ -25,6 +26,8 @@
     "verify": "pnpm lint && pnpm typecheck && pnpm test"
   },
   "devDependencies": {
+    "@stryker-mutator/core": "^8",
+    "@stryker-mutator/vitest-runner": "^8",
     "@types/node": "^20.14.0",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",

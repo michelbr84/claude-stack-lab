@@ -1,0 +1,195 @@
+{
+  "generatedAt": "2026-04-21T14:51:31.786Z",
+  "strykerVersion": "unknown",
+  "schemaVersion": "1.0",
+  "totals": {
+    "total": 1675,
+    "killed": 913,
+    "survived": 572,
+    "noCoverage": 190,
+    "score": 54.51,
+    "effectiveScore": 61.48
+  },
+  "thresholds": {
+    "high": 85,
+    "low": 65,
+    "break": 65
+  },
+  "perFile": {
+    "apps/cli/src/commands.ts": {
+      "total": 108,
+      "killed": 44,
+      "survived": 53,
+      "noCoverage": 11,
+      "score": 40.74
+    },
+    "apps/cli/src/compare.ts": {
+      "total": 48,
+      "killed": 0,
+      "survived": 0,
+      "noCoverage": 48,
+      "score": 0
+    },
+    "apps/runner/src/load-scenarios.ts": {
+      "total": 2,
+      "killed": 0,
+      "survived": 0,
+      "noCoverage": 2,
+      "score": 0
+    },
+    "apps/runner/src/runner.ts": {
+      "total": 63,
+      "killed": 20,
+      "survived": 39,
+      "noCoverage": 4,
+      "score": 31.75
+    },
+    "packages/adapters/src/complexity.ts": {
+      "total": 411,
+      "killed": 166,
+      "survived": 194,
+      "noCoverage": 51,
+      "score": 40.39
+    },
+    "packages/adapters/src/coverage.ts": {
+      "total": 84,
+      "killed": 39,
+      "survived": 35,
+      "noCoverage": 10,
+      "score": 46.43
+    },
+    "packages/adapters/src/dependency.ts": {
+      "total": 198,
+      "killed": 109,
+      "survived": 73,
+      "noCoverage": 16,
+      "score": 55.05
+    },
+    "packages/adapters/src/lint.ts": {
+      "total": 34,
+      "killed": 19,
+      "survived": 8,
+      "noCoverage": 7,
+      "score": 55.88
+    },
+    "packages/adapters/src/module-size.ts": {
+      "total": 108,
+      "killed": 76,
+      "survived": 28,
+      "noCoverage": 4,
+      "score": 70.37
+    },
+    "packages/adapters/src/mutation.ts": {
+      "total": 84,
+      "killed": 39,
+      "survived": 34,
+      "noCoverage": 11,
+      "score": 46.43
+    },
+    "packages/adapters/src/process.ts": {
+      "total": 52,
+      "killed": 32,
+      "survived": 19,
+      "noCoverage": 1,
+      "score": 61.54
+    },
+    "packages/adapters/src/typecheck.ts": {
+      "total": 34,
+      "killed": 17,
+      "survived": 10,
+      "noCoverage": 7,
+      "score": 50
+    },
+    "packages/reporting/src/markdown.ts": {
+      "total": 59,
+      "killed": 15,
+      "survived": 42,
+      "noCoverage": 2,
+      "score": 25.42
+    },
+    "packages/scenario-core/src/evaluate.ts": {
+      "total": 75,
+      "killed": 68,
+      "survived": 5,
+      "noCoverage": 2,
+      "score": 90.67
+    },
+    "packages/scenario-core/src/executor.ts": {
+      "total": 57,
+      "killed": 43,
+      "survived": 13,
+      "noCoverage": 1,
+      "score": 75.44
+    },
+    "packages/scenario-core/src/scenario.ts": {
+      "total": 35,
+      "killed": 28,
+      "survived": 5,
+      "noCoverage": 2,
+      "score": 80
+    },
+    "packages/shared/src/logger.ts": {
+      "total": 35,
+      "killed": 24,
+      "survived": 0,
+      "noCoverage": 11,
+      "score": 68.57
+    },
+    "apps/cli/src/args.ts": {
+      "total": 41,
+      "killed": 40,
+      "survived": 1,
+      "noCoverage": 0,
+      "score": 97.56
+    },
+    "packages/reporting/src/html.ts": {
+      "total": 11,
+      "killed": 9,
+      "survived": 2,
+      "noCoverage": 0,
+      "score": 81.82
+    },
+    "packages/reporting/src/json.ts": {
+      "total": 3,
+      "killed": 3,
+      "survived": 0,
+      "noCoverage": 0,
+      "score": 100
+    },
+    "packages/scenario-core/src/registry.ts": {
+      "total": 18,
+      "killed": 18,
+      "survived": 0,
+      "noCoverage": 0,
+      "score": 100
+    },
+    "packages/scoring-engine/src/score.ts": {
+      "total": 58,
+      "killed": 54,
+      "survived": 4,
+      "noCoverage": 0,
+      "score": 93.1
+    },
+    "packages/shared/src/fs-helpers.ts": {
+      "total": 17,
+      "killed": 13,
+      "survived": 4,
+      "noCoverage": 0,
+      "score": 76.47
+    },
+    "packages/shared/src/result.ts": {
+      "total": 12,
+      "killed": 12,
+      "survived": 0,
+      "noCoverage": 0,
+      "score": 100
+    },
+    "packages/shared/src/run-id.ts": {
+      "total": 28,
+      "killed": 25,
+      "survived": 3,
+      "noCoverage": 0,
+      "score": 89.29
+    }
+  }
+}

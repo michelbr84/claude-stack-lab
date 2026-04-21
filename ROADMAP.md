@@ -51,9 +51,13 @@ React + Vite dashboard, run history, comparison view, evidence links.
 Fastify HTTP layer over the runner, run persistence in SQLite, REST
 endpoints used by the dashboard.
 
-### Phase 5 — Hardened CI
-`pr.yml`, `nightly.yml`, `baseline-refresh.yml`. Quality gates become
-required checks. Mutation runs nightly to keep PR latency low.
+### Phase 5 — Hardened CI (🚧 partially shipped)
+`pr.yml`, `mutation.yml`, `baseline-refresh.yml`. Quality gates
+become required checks. Mutation runs nightly to keep PR latency
+low. Current state: real Stryker mutation integrated with a
+committed snapshot (floor 50 %); scenario 011 enforces it on every
+PR; `mutation.yml` refreshes the snapshot on a weekly cron and on
+`main` pushes that touch source. `baseline-refresh.yml` still TBD.
 
 ### Phase 6 — Multi-language (post-V1)
 Add fixtures and adapters for Python / Go / Rust. Out of scope for V1.

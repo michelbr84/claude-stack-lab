@@ -93,7 +93,8 @@ export const scenario010: Scenario = {
       '006-mutation-testing',
       '007-tdd-loop',
       '008-awesome-claude-token-stack',
-      '009-refactor-module'
+      '009-refactor-module',
+      '011-lab-mutation-score'
     ];
     const missing = requiredIds.filter((id) => !presentIds.has(id));
     if (missing.length > 0) {

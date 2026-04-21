@@ -39,15 +39,15 @@ export interface Scenario {
 | 007 | tdd-loop               | cmp-validation        | mutation-survivors | `/tdd-loop` produces a real failing test before the implementation (manifest) |
 | 008 | awesome-claude-token-stack | cmp-validation    | none               | the upstream ACTS still ships every load-bearing claim from its README |
 | 009 | refactor-module        | cmp-validation        | large-modules      | `/refactor-module` reduced a module past the size ceiling without regressing tests (manifest) |
-| 010 | full-regression        | regression            | none               | committed baseline still records a green run of 001..009 |
+| 010 | full-regression        | regression            | none               | committed baseline still records a green run of 001..009, 011 |
+| 011 | lab-mutation-score     | mutation              | none               | committed Stryker snapshot for the lab's own packages meets the V1 floor |
 
-Scenarios 007..010 are the **ClaudeMaxPower validation set**. They
-each declare the skill used (or the upstream being validated), the
-prompt given, the expected outcome, and the evidence produced.
-Scenarios 007 and 009 use a **manifest** pattern — the operator runs
-the slash command manually, then commits a manifest that 007/009
-validate. Scenarios 008 and 010 execute live (upstream validation
-and committed-baseline contract check, respectively).
+Scenarios 007..011 cover the **ClaudeMaxPower validation** and
+**real quality gate** sets. Scenarios 007 and 009 use a **manifest**
+pattern — the operator runs the slash command manually, then commits
+a manifest that the scenario validates. Scenarios 008, 010 and 011
+execute live (upstream validation, committed-baseline contract
+check, and real Stryker-snapshot contract, respectively).
 
 ## Lifecycle
 
