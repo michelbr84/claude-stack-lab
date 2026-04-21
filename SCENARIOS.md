@@ -36,14 +36,18 @@ export interface Scenario {
 | 004 | cyclomatic-complexity  | complexity            | high-complexity    | lab fails when a function exceeds the complexity ceiling |
 | 005 | module-sizes           | module-size           | large-modules      | lab fails when a critical file exceeds the size ceiling |
 | 006 | mutation-testing       | mutation              | mutation-survivors | lab fails when too many mutants survive |
-| 007 | tdd-loop               | cmp-validation        | mutation-survivors | `/tdd-loop` produces a real failing test before the implementation |
-| 008 | debugging              | cmp-validation        | high-complexity    | `/systematic-debugging` finds the root cause without collateral damage |
-| 009 | refactor               | cmp-validation        | large-modules      | `/refactor-module` improves a metric without regressing tests |
-| 010 | full-regression        | regression            | healthy-baseline   | every previous scenario still passes after a CMP-led change |
+| 007 | tdd-loop               | cmp-validation        | mutation-survivors | `/tdd-loop` produces a real failing test before the implementation (manifest) |
+| 008 | awesome-claude-token-stack | cmp-validation    | none               | the upstream ACTS still ships every load-bearing claim from its README |
+| 009 | refactor-module        | cmp-validation        | large-modules      | `/refactor-module` reduced a module past the size ceiling without regressing tests (manifest) |
+| 010 | full-regression        | regression            | none               | committed baseline still records a green run of 001..009 |
 
 Scenarios 007..010 are the **ClaudeMaxPower validation set**. They
-each declare the skill used, the prompt given, the expected outcome,
-and the evidence produced.
+each declare the skill used (or the upstream being validated), the
+prompt given, the expected outcome, and the evidence produced.
+Scenarios 007 and 009 use a **manifest** pattern — the operator runs
+the slash command manually, then commits a manifest that 007/009
+validate. Scenarios 008 and 010 execute live (upstream validation
+and committed-baseline contract check, respectively).
 
 ## Lifecycle
 

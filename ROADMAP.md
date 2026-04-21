@@ -29,15 +29,20 @@ The goal is not "run a tool". The goal is to answer:
 ### Phase 0 — Bootstrap
 Repo, this roadmap, the engineering conventions, the legacy-docs move.
 
-### Phase 1 — Foundation (V1, current)
+### Phase 1 — Foundation (V1, ✅ shipped)
 Monorepo, runner, CLI, mini-app, healthy baseline, six fixtures with
 known-bad code, scenarios 001..006, JSON + Markdown reports, scoring
-engine, lab CI workflow (`pr.yml`).
+engine, lab CI workflow (`pr.yml`). Landed via PR #1.
 
-### Phase 2 — ClaudeMaxPower validation
-Scenarios 007..010 — explicit before/after runs around `/tdd-loop`,
-`/systematic-debugging`, `/refactor-module`, plus a full-regression
-pass.
+### Phase 2 — ClaudeMaxPower validation (✅ shipped)
+Scenarios 007..010 — before/after runs around `/tdd-loop` (007),
+`/refactor-module` (009), an active upstream contract check for
+`awesome-claude-token-stack` (008), and a committed-baseline
+regression gate (010). `/systematic-debugging` validation (was
+slotted as 008 in early drafts) is now captured by the
+cmp-validation category more broadly; a dedicated scenario will
+land in a follow-up if a reproducible before/after artifact
+proves useful.
 
 ### Phase 3 — Dashboard
 React + Vite dashboard, run history, comparison view, evidence links.
