@@ -1,0 +1,17 @@
+{
+  "name": "@fixture/healthy-baseline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Issue Quality Dashboard — the canonical, well-formed mini-app the lab measures itself against.",
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo \"(no fixture-local lint)\"",
+    "test": "vitest run --root . --dir src"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.9"
+  }
+}

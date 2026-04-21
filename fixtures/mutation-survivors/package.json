@@ -1,0 +1,10 @@
+{
+  "name": "@fixture/mutation-survivors",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Lines fully covered but assertions are intentionally weak. Drives scenarios 006 and 007.",
+  "scripts": {
+    "test": "vitest run --config vitest.config.ts"
+  }
+}

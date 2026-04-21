@@ -1,0 +1,8 @@
+node_modules
+dist
+build
+coverage
+evidence
+fixtures/**/node_modules
+docs/legacy
+pnpm-lock.yaml

@@ -1,0 +1,123 @@
+name: lab-pr
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, "feat/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lab-pr-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify (lint / typecheck / tests)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Tests + coverage
+        run: pnpm test:coverage
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ github.run_id }}
+          path: evidence/coverage/
+          if-no-files-found: warn
+          retention-days: 14
+
+  scenarios:
+    name: Scenarios
+    runs-on: ubuntu-latest
+    needs: verify
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Fetch awesome-claude-token-stack (for scenario 008)
+        run: bash scripts/fetch-awesome-claude-token-stack.sh
+
+      - name: Scenario 001 (bootstrap)
+        run: cd apps/cli && node --import=tsx src/bin.ts run 001-bootstrap --cwd "$GITHUB_WORKSPACE"
+
+      - name: Scenarios 003 / 004 / 005 (inline analyzers)
+        run: |
+          cd apps/cli
+          node --import=tsx src/bin.ts run 003-dependency-structure --cwd "$GITHUB_WORKSPACE"
+          node --import=tsx src/bin.ts run 004-cyclomatic-complexity --cwd "$GITHUB_WORKSPACE"
+          node --import=tsx src/bin.ts run 005-module-sizes --cwd "$GITHUB_WORKSPACE"
+
+      - name: Scenario 002 (coverage)
+        run: cd apps/cli && node --import=tsx src/bin.ts run 002-coverage --cwd "$GITHUB_WORKSPACE"
+
+      - name: Scenario 006 (surrogate mutation)
+        run: cd apps/cli && node --import=tsx src/bin.ts run 006-mutation-testing --cwd "$GITHUB_WORKSPACE"
+
+      - name: Scenario 007 (TDD-loop manifest)
+        run: cd apps/cli && node --import=tsx src/bin.ts run 007-tdd-loop --cwd "$GITHUB_WORKSPACE"
+
+      - name: Scenario 008 (awesome-claude-token-stack)
+        run: cd apps/cli && node --import=tsx src/bin.ts run 008-awesome-claude-token-stack --cwd "$GITHUB_WORKSPACE"
+
+      - name: Run all (single combined report)
+        run: cd apps/cli && node --import=tsx src/bin.ts run all --cwd "$GITHUB_WORKSPACE"
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ github.run_id }}
+          path: |
+            evidence/json/
+            evidence/runs/
+            evidence/raw/
+            evidence/snapshots/
+            evidence/html/
+          if-no-files-found: warn
+          retention-days: 30

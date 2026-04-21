@@ -1,0 +1,25 @@
+{
+  "name": "@lab/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "bin": {
+    "lab": "./src/bin.ts"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. --dir apps/cli",
+    "start": "tsx src/bin.ts"
+  },
+  "dependencies": {
+    "@lab/shared": "workspace:*",
+    "@lab/runner": "workspace:*",
+    "@lab/scenario-core": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2"
+  }
+}

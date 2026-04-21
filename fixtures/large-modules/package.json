@@ -1,0 +1,7 @@
+{
+  "name": "@fixture/large-modules",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Generated oversized module. Drives scenario 005."
+}
