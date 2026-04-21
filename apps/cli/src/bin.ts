@@ -3,10 +3,14 @@ import { resolve } from 'node:path';
 import { parseArgs } from './args.js';
 import { dispatch, type CommandContext } from './commands.js';
 import { loadAllScenarios } from '@lab/runner';
+import { resolveRepoRoot } from './resolveRepoRoot.js';
 
 async function main(): Promise<void> {
   const parsed = parseArgs(process.argv.slice(2));
-  const cwd = String(parsed.flags.cwd ?? process.cwd());
+  const cwd =
+    typeof parsed.flags.cwd === 'string'
+      ? resolve(process.cwd(), parsed.flags.cwd)
+      : resolveRepoRoot(process.cwd());
   const evidenceRoot = resolve(cwd, String(parsed.flags.evidence ?? 'evidence'));
   const fixturesRoot = resolve(cwd, String(parsed.flags.fixtures ?? 'fixtures'));
   const scenarios = await loadAllScenarios();

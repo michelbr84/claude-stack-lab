@@ -20,9 +20,9 @@
     "test:coverage": "vitest run --coverage",
     "test:mutation": "stryker run",
     "test:dashboard": "pnpm --filter @lab/web-dashboard run test",
-    "scenario": "pnpm --filter @lab/cli run start --",
-    "scenario:001": "pnpm --filter @lab/cli run start -- run 001",
-    "scenario:all": "pnpm --filter @lab/cli run start -- run all",
+    "scenario": "pnpm --filter @lab/cli run start",
+    "scenario:001": "pnpm --filter @lab/cli run start run 001",
+    "scenario:all": "pnpm --filter @lab/cli run start run all",
     "metrics": "node scripts/metrics.mjs",
     "verify": "pnpm lint && pnpm typecheck && pnpm test"
   },
