@@ -44,8 +44,12 @@ cmp-validation category more broadly; a dedicated scenario will
 land in a follow-up if a reproducible before/after artifact
 proves useful.
 
-### Phase 3 — Dashboard
-React + Vite dashboard, run history, comparison view, evidence links.
+### Phase 3 — Dashboard (🚧 partially shipped)
+React 19 + Vite 8 SPA landed in `apps/web-dashboard`. Lists
+scenarios, shows the 25 most recent runs, and renders the
+committed baseline breakdown. Dev proxy forwards `/api/*` to the
+Fastify server. Run history and side-by-side comparison view are
+follow-ups once more runs accumulate in the evidence store.
 
 ### Phase 4 — API (🚧 partially shipped)
 Fastify 5 HTTP layer landed in `apps/api`. Read-only endpoints

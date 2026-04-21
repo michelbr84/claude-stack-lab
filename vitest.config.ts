@@ -13,7 +13,8 @@ export default defineConfig({
       '**/node_modules/**',
       '**/dist/**',
       '**/build/**',
-      'fixtures/**'
+      'fixtures/**',
+      'apps/web-dashboard/**'
     ],
     coverage: {
       provider: 'v8',
@@ -27,7 +28,8 @@ export default defineConfig({
         '**/*.test.ts',
         '**/*.d.ts',
         '**/index.ts',
-        '**/types.ts'
+        '**/types.ts',
+        'apps/web-dashboard/**'
       ],
       thresholds: {
         lines: 80,

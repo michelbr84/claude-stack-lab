@@ -33,6 +33,7 @@ apps/
   runner/         the engine that executes scenarios
   cli/            user-facing command-line entry point
   api/            Fastify REST layer over the evidence directory
+  web-dashboard/  Vite + React read-only dashboard that consumes the API
 packages/
   shared/         common types and utilities
   scenario-core/  scenario contract + executor (the heart)
@@ -67,12 +68,17 @@ pnpm scenario:001    # bootstrap
 pnpm scenario:all
 
 # 5. serve the evidence over HTTP (read-only)
-pnpm --filter @lab/api run start        # http://127.0.0.1:8080
+pnpm --filter @lab/api run start            # http://127.0.0.1:8080
+
+# 6. open the dashboard (in a second terminal)
+pnpm --filter @lab/web-dashboard run dev    # http://127.0.0.1:5173
 ```
 
 Outputs land in `evidence/` and are diff-friendly between runs. The
 API exposes `GET /health`, `/scenarios`, `/runs`, `/runs/:runId`,
-`/runs/:runId/markdown`, and `/baseline`.
+`/runs/:runId/markdown`, and `/baseline`. The dashboard is a small
+Vite + React SPA that lists scenarios, recent runs, and the
+committed baseline.
 
 ## Wave 1 status
 

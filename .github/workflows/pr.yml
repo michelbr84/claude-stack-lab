@@ -47,6 +47,12 @@ jobs:
       - name: Tests + coverage
         run: pnpm test:coverage
 
+      - name: Dashboard tests
+        run: pnpm test:dashboard
+
+      - name: Dashboard build
+        run: pnpm --filter @lab/web-dashboard run build
+
       - name: Upload coverage artifact
         if: always()
         uses: actions/upload-artifact@v4
