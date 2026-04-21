@@ -246,9 +246,19 @@ CMP discipline manifested as:
 
 ## Proof of completion
 
-- `pnpm verify` exit 0
-- `lab run all` exit 0, global score 100/100, all 8 scenarios pass
+- `pnpm verify` exit 0 locally
+- `lab run all` exit 0 locally; global score 100/100; all 8
+  scenarios pass
 - `evidence/snapshots/baseline-run.json` committed
 - `evidence/snapshots/007-tdd-loop/manifest.json` committed
-- `.github/workflows/pr.yml` committed; CI run will be triggered
-  by the push that opens the PR
+- **PR**: <https://github.com/michelbr84/claude-stack-lab/pull/1>
+- **CI status**: every check on the PR is `SUCCESS`
+  (`Validate Shell Scripts`, `Verify (lint / typecheck / tests)`,
+  `Validate GitHub Actions Workflows`, `Scenarios`,
+  `Validate JSON Files`, `Check for Secrets`, `Lint Markdown`,
+  `Run Example Tests`, `Verify Project Structure`). PR is
+  `MERGEABLE`.
+- Commits on this branch:
+  - `c46bd67` chore(repo): land ClaudeMaxPower install + supporting infra
+  - `085ed07` feat(lab): wave 1 — monorepo, scenarios, ACTS validation, CI
+  - `147f575` chore(ci): add minimal examples/todo-app placeholder
