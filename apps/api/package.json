@@ -1,0 +1,27 @@
+{
+  "name": "@lab/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "lab-api": "./src/bin.ts"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. --dir apps/api",
+    "start": "tsx src/bin.ts"
+  },
+  "dependencies": {
+    "@lab/shared": "workspace:*",
+    "@lab/reporting": "workspace:*",
+    "@lab/scoring-engine": "workspace:*",
+    "@lab/runner": "workspace:*",
+    "fastify": "^5"
+  }
+}
