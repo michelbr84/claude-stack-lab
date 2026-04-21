@@ -1,0 +1,102 @@
+name: lab-baseline-refresh
+
+on:
+  schedule:
+    # every Monday at 06:15 UTC — 15 min after the mutation run so the
+    # mutation snapshot can be refreshed first.
+    - cron: '15 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: lab-baseline-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Run all scenarios and propose an updated baseline
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Fetch awesome-claude-token-stack (for scenario 008)
+        run: bash scripts/fetch-awesome-claude-token-stack.sh
+
+      - name: Run all scenarios
+        run: cd apps/cli && node --import=tsx src/bin.ts run all --cwd "$GITHUB_WORKSPACE"
+
+      - name: Promote the fresh run to baseline-run.json
+        id: promote
+        run: |
+          latest=$(find evidence/json -maxdepth 1 -name '*.json' -type f -printf '%f\n' | sort | tail -1)
+          if [ -z "$latest" ]; then
+            echo "no run json produced"; exit 1
+          fi
+          latest="evidence/json/$latest"
+          cp "$latest" evidence/snapshots/baseline-run.json
+          score=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$latest','utf8')).score.score)")
+          status=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$latest','utf8')).score.status)")
+          run_id="$(basename "$latest" .json)"
+          {
+            echo "score=$score"
+            echo "status=$status"
+            echo "run=$run_id"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if git diff --quiet evidence/snapshots/baseline-run.json; then
+            changed="false"
+          else
+            changed="true"
+          fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
+      - name: Open PR when baseline moved
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/baseline-refresh
+          title: "chore(baseline): weekly auto-refresh"
+          commit-message: |
+            chore(baseline): weekly auto-refresh
+
+            Run: ${{ steps.promote.outputs.run }}
+            Score: ${{ steps.promote.outputs.score }}
+            Status: ${{ steps.promote.outputs.status }}
+          body: |
+            Automated refresh of `evidence/snapshots/baseline-run.json` by
+            `.github/workflows/baseline-refresh.yml`.
+
+            - **Run**: `${{ steps.promote.outputs.run }}`
+            - **Score**: `${{ steps.promote.outputs.score }}`
+            - **Status**: `${{ steps.promote.outputs.status }}`
+
+            Review and merge if the new baseline reflects intentional state. Close
+            without merging if it surfaced a regression that should be fixed first.
+          labels: chore,automated
+
+      - name: No changes
+        if: steps.diff.outputs.changed == 'false'
+        run: echo "baseline is already up-to-date."

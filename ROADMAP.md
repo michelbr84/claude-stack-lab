@@ -51,21 +51,28 @@ committed baseline breakdown. Dev proxy forwards `/api/*` to the
 Fastify server. Run history and side-by-side comparison view are
 follow-ups once more runs accumulate in the evidence store.
 
-### Phase 4 — API (🚧 partially shipped)
-Fastify 5 HTTP layer landed in `apps/api`. Read-only endpoints
-(`/health`, `/scenarios`, `/runs`, `/runs/:id`,
-`/runs/:id/markdown`, `/baseline`) backed by the `evidence/`
-directory — no native DB dependency. A follow-up will add
-`POST /runs` (queued trigger) and, if scale warrants, migrate the
-read model to SQLite.
+### Phase 4 — API (✅ shipped)
+Fastify 5 HTTP layer in `apps/api`.
+- Read-only: `/health`, `/scenarios`, `/runs`, `/runs/:id`,
+  `/runs/:id/markdown`, `/baseline`.
+- Optional trigger (off by default): `POST /runs` + `GET /runs/active`
+  enabled via `LAB_ENABLE_TRIGGER=1`. Single in-flight guard in
+  `RunnerBridge`; returns the active runId on conflict (409).
+- Storage: filesystem JSON under `evidence/`. SQLite is a future
+  follow-up if the snapshot count grows past O(100).
 
-### Phase 5 — Hardened CI (🚧 partially shipped)
-`pr.yml`, `mutation.yml`, `baseline-refresh.yml`. Quality gates
-become required checks. Mutation runs nightly to keep PR latency
-low. Current state: real Stryker mutation integrated with a
-committed snapshot (floor 50 %); scenario 011 enforces it on every
-PR; `mutation.yml` refreshes the snapshot on a weekly cron and on
-`main` pushes that touch source. `baseline-refresh.yml` still TBD.
+### Phase 5 — Hardened CI (✅ shipped)
+`pr.yml` + `mutation.yml` + `baseline-refresh.yml`.
+- `pr.yml` enforces lint, typecheck, coverage, every scenario, and
+  the dashboard build on every PR (~2 min).
+- `mutation.yml` runs real Stryker weekly (Mon 06:00 UTC) and on
+  `main` pushes that touch source; uploads the full report as an
+  artifact.
+- `baseline-refresh.yml` runs weekly (Mon 06:15 UTC), refreshes
+  `evidence/snapshots/baseline-run.json`, and opens a PR only when
+  the baseline actually moved.
+- Mutation floors: total ≥ 55 %, effective ≥ 60 %; current baseline
+  59.18 % / 66.93 %.
 
 ### Phase 6 — Multi-language (post-V1)
 Add fixtures and adapters for Python / Go / Rust. Out of scope for V1.

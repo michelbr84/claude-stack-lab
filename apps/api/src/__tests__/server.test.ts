@@ -197,3 +197,97 @@ describe('not-found handler', () => {
     expect(r.json<{ error: string }>().error).toBe('not_found');
   });
 });
+
+describe('POST /runs (no bridge)', () => {
+  it('responds 501 when no runner bridge is configured', async () => {
+    const app = buildApp();
+    const r = await app.inject({ method: 'POST', url: '/runs', payload: { target: 'all' } });
+    expect(r.statusCode).toBe(501);
+    expect(r.json<{ error: string }>().error).toBe('not_implemented');
+  });
+});
+
+type BridgeStub = import('../runner-bridge.js').RunnerBridge;
+const fakeBridge = (
+  trigger: BridgeStub['trigger'],
+  activeRun: BridgeStub['activeRun'] = () => null
+): BridgeStub =>
+  ({
+    trigger,
+    activeRun,
+    isBusy: () => activeRun() !== null,
+    waitForActive: async () => undefined
+  }) as unknown as BridgeStub;
+
+describe('POST /runs (with bridge)', () => {
+  it('returns 202 with a runId for a valid target', async () => {
+    const app = buildServer({
+      store: new EvidenceStore({ evidenceRoot }),
+      scenarios: stubScenarios,
+      runnerBridge: fakeBridge(async () => ({
+        runId: 'r1',
+        target: '001-a',
+        startedAt: 't',
+        accepted: true
+      }))
+    });
+    const r = await app.inject({ method: 'POST', url: '/runs', payload: { target: '001-a' } });
+    expect(r.statusCode).toBe(202);
+    expect(r.json<{ runId: string; accepted: boolean }>().runId).toBe('r1');
+  });
+
+  it('returns 409 when a run is already active', async () => {
+    const app = buildServer({
+      store: new EvidenceStore({ evidenceRoot }),
+      scenarios: stubScenarios,
+      runnerBridge: fakeBridge(async () => ({
+        runId: 'r1',
+        target: '001-a',
+        startedAt: 't',
+        accepted: false,
+        reason: 'a run is already in progress'
+      }))
+    });
+    const r = await app.inject({ method: 'POST', url: '/runs', payload: { target: '001-a' } });
+    expect(r.statusCode).toBe(409);
+  });
+
+  it('returns 400 when the target is malformed', async () => {
+    const app = buildServer({
+      store: new EvidenceStore({ evidenceRoot }),
+      scenarios: stubScenarios,
+      runnerBridge: fakeBridge(async () => {
+        throw new Error('invalid target "../"');
+      })
+    });
+    const r = await app.inject({ method: 'POST', url: '/runs', payload: { target: '../' } });
+    expect(r.statusCode).toBe(400);
+  });
+
+  it('GET /runs/active returns null when idle', async () => {
+    const app = buildServer({
+      store: new EvidenceStore({ evidenceRoot }),
+      scenarios: stubScenarios,
+      runnerBridge: fakeBridge(
+        async () => ({ runId: 'x', target: 'y', startedAt: 't', accepted: true }),
+        () => null
+      )
+    });
+    const r = await app.inject({ method: 'GET', url: '/runs/active' });
+    expect(r.statusCode).toBe(200);
+    expect(r.json<{ active: null }>().active).toBeNull();
+  });
+
+  it('GET /runs/active returns the active run when busy', async () => {
+    const app = buildServer({
+      store: new EvidenceStore({ evidenceRoot }),
+      scenarios: stubScenarios,
+      runnerBridge: fakeBridge(
+        async () => ({ runId: 'x', target: 'y', startedAt: 't', accepted: true }),
+        () => ({ runId: 'r42', target: 'all', startedAt: 't' })
+      )
+    });
+    const r = await app.inject({ method: 'GET', url: '/runs/active' });
+    expect(r.json<{ active: { runId: string } }>().active.runId).toBe('r42');
+  });
+});

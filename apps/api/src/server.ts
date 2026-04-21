@@ -1,9 +1,11 @@
 import Fastify, { type FastifyInstance, type FastifyReply } from 'fastify';
 import type { EvidenceStore } from './store.js';
+import type { RunnerBridge } from './runner-bridge.js';
 
 export interface ServerOptions {
   store: EvidenceStore;
   scenarios: Array<{ id: string; title: string; category: string; fixture: string | null }>;
+  runnerBridge?: RunnerBridge;
   logger?: boolean;
 }
 
@@ -55,6 +57,35 @@ export function buildServer(opts: ServerOptions): FastifyInstance {
     if (!report) return notFound(reply, 'no baseline committed');
     return report;
   });
+
+  if (opts.runnerBridge) {
+    const bridge = opts.runnerBridge;
+
+    app.post<{ Body?: { target?: string } }>('/runs', async (req, reply) => {
+      const body = req.body ?? {};
+      const target = typeof body.target === 'string' ? body.target : '';
+      try {
+        const result = await bridge.trigger(target);
+        reply.code(result.accepted ? 202 : 409);
+        return result;
+      } catch (e) {
+        return badRequest(reply, (e as Error).message);
+      }
+    });
+
+    app.get('/runs/active', async () => {
+      const active = bridge.activeRun();
+      return active === null ? { active: null } : { active };
+    });
+  } else {
+    app.post('/runs', async (_req, reply) => {
+      reply.code(501);
+      return {
+        error: 'not_implemented',
+        message: 'POST /runs disabled on this instance (no RunnerBridge configured)'
+      };
+    });
+  }
 
   app.setNotFoundHandler((req, reply) => {
     reply.code(404).send({ error: 'not_found', path: req.url });
