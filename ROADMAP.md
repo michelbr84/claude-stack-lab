@@ -47,9 +47,13 @@ proves useful.
 ### Phase 3 — Dashboard
 React + Vite dashboard, run history, comparison view, evidence links.
 
-### Phase 4 — API
-Fastify HTTP layer over the runner, run persistence in SQLite, REST
-endpoints used by the dashboard.
+### Phase 4 — API (🚧 partially shipped)
+Fastify 5 HTTP layer landed in `apps/api`. Read-only endpoints
+(`/health`, `/scenarios`, `/runs`, `/runs/:id`,
+`/runs/:id/markdown`, `/baseline`) backed by the `evidence/`
+directory — no native DB dependency. A follow-up will add
+`POST /runs` (queued trigger) and, if scale warrants, migrate the
+read model to SQLite.
 
 ### Phase 5 — Hardened CI (🚧 partially shipped)
 `pr.yml`, `mutation.yml`, `baseline-refresh.yml`. Quality gates
