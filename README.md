@@ -61,8 +61,10 @@ pnpm install
 # 2. verify the lab itself is healthy
 pnpm verify          # lint + typecheck + tests
 
-# 3. run a single scenario
-pnpm scenario:001    # bootstrap
+# 3. run a single scenario (short or full id both work)
+pnpm scenario:001                           # bootstrap
+pnpm scenario -- run 002-coverage           # pick any scenario by id
+pnpm scenario -- run 008                    # short id resolves to 008-awesome-claude-token-stack
 
 # 4. run the full suite
 pnpm scenario:all
@@ -80,15 +82,19 @@ API exposes `GET /health`, `/scenarios`, `/runs`, `/runs/:runId`,
 Vite + React SPA that lists scenarios, recent runs, and the
 committed baseline.
 
-## Wave 1 status
+## Status
 
-This branch is the first implementation wave. It scaffolds the
-monorepo, the scenario contract, the cheapest adapters
-(lint/typecheck/coverage/size/cycles/complexity), the runner and CLI,
-the `healthy-baseline` fixture, and scenario 001.
+V1 / MVP has shipped on `main`. All 11 canonical scenarios (001–011)
+run green with a global score of 100/100, the four apps
+(`runner`, `cli`, `api`, `web-dashboard`) are live, the five shared
+packages are published in the workspace, and the CI quality gates are
+enforced.
 
-See [`docs/reports/wave-1-handoff.md`](./docs/reports/wave-1-handoff.md)
-for the full report.
+The current handoff report is
+[`docs/reports/final-handoff.md`](./docs/reports/final-handoff.md).
+The original Wave-1 scaffolding report is retained at
+[`docs/reports/wave-1-handoff.md`](./docs/reports/wave-1-handoff.md)
+for historical context.
 
 ## Documentation
 
@@ -119,5 +125,5 @@ The four iron laws apply:
 3. No fixes without root-cause investigation.
 4. No merge with failing tests.
 
-[acts]: https://github.com/aitmlouk/awesome-claude-token-stack
+[acts]: https://github.com/michelbr84/awesome-claude-token-stack
 [cmp]: https://github.com/michelbr84/ClaudeMaxPower

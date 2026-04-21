@@ -76,6 +76,26 @@ describe('dispatch', () => {
     expect(code).toBe(2);
   });
 
+  it('run accepts a short numeric id and resolves it to the full scenario id', async () => {
+    const code = await dispatch(
+      parseArgs(['run', '001']),
+      ctxFor([make('001-bootstrap'), make('002-coverage')])
+    );
+    expect(code).toBe(0);
+    expect(lines.some((l) => l.includes('001-bootstrap'))).toBe(true);
+  });
+
+  it('run on an ambiguous short id returns 2 and lists the matches', async () => {
+    const code = await dispatch(
+      parseArgs(['run', '007-a']),
+      ctxFor([make('007-a-alpha'), make('007-a-beta')])
+    );
+    expect(code).toBe(2);
+    expect(lines.some((l) => /ambiguous/.test(l))).toBe(true);
+    expect(lines.some((l) => l.includes('007-a-alpha'))).toBe(true);
+    expect(lines.some((l) => l.includes('007-a-beta'))).toBe(true);
+  });
+
   it('run on a passing scenario returns 0 and writes reports', async () => {
     const code = await dispatch(parseArgs(['run', '001-a']), ctxFor([make('001-a')]));
     expect(code).toBe(0);

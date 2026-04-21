@@ -126,5 +126,5 @@ The MVP is *only* approved when **all** of the following hold:
 - **Storage**: filesystem JSON (SQLite arrives in Phase 4)
 - **CI**: GitHub Actions
 
-[acts]: https://github.com/aitmlouk/awesome-claude-token-stack
+[acts]: https://github.com/michelbr84/awesome-claude-token-stack
 [cmp]: https://github.com/michelbr84/ClaudeMaxPower

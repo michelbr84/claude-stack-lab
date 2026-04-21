@@ -3,6 +3,7 @@ import type { Scenario } from '@lab/scenario-core';
 import { type RunReport, type ScenarioResult } from '@lab/shared';
 import type { GlobalScore } from '@lab/scoring-engine';
 import type { ParsedArgs } from './args.js';
+import { resolveScenarioId } from './resolveScenario.js';
 
 export interface CommandContext {
   cwd: string;
@@ -39,6 +40,7 @@ function cmdHelp(ctx: CommandContext): number {
   ctx.out('Commands:');
   ctx.out('  list                       list registered scenarios');
   ctx.out('  run <id|all>               run a scenario or every scenario');
+  ctx.out('                             (short ids accepted — "001" matches "001-bootstrap")');
   ctx.out('  compare <runIdA> <runIdB>  diff two runs (json reports)');
   ctx.out('  reset                      delete generated evidence dirs');
   ctx.out('');
@@ -78,11 +80,16 @@ async function cmdRun(parsed: ParsedArgs, ctx: CommandContext): Promise<number> 
     return out.score.status === 'pass' ? 0 : 1;
   }
 
-  if (!runner.has(target)) {
-    ctx.out(`scenario "${target}" not registered`);
+  const resolved = resolveScenarioId(target, ctx.scenarios);
+  if (!resolved.ok) {
+    ctx.out(resolved.reason);
+    if (resolved.suggestions.length > 0) {
+      ctx.out('did you mean:');
+      for (const s of resolved.suggestions) ctx.out(`  ${s}`);
+    }
     return 2;
   }
-  const out = await runner.runOne(target);
+  const out = await runner.runOne(resolved.id);
   printScenarioSummary(out.result, ctx.out);
   ctx.out(`score:    ${out.score.score} / 100 (${out.score.status})`);
   ctx.out(`json:     ${out.reports.json}`);
