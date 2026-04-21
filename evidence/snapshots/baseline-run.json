@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "run": {
-    "runId": "2026-04-21T15-01-26-359Z-224ae9",
-    "startedAt": "2026-04-21T15:01:26.360Z",
-    "finishedAt": "2026-04-21T15:01:46.436Z",
-    "durationMs": 20076,
+    "runId": "2026-04-21T15-31-12-095Z-b2953f",
+    "startedAt": "2026-04-21T15:31:12.096Z",
+    "finishedAt": "2026-04-21T15:31:31.747Z",
+    "durationMs": 19651,
     "scenarios": [
       {
         "scenarioId": "001-bootstrap",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:26.369Z",
-        "finishedAt": "2026-04-21T15:01:36.783Z",
-        "durationMs": 10414,
+        "startedAt": "2026-04-21T15:31:12.105Z",
+        "finishedAt": "2026-04-21T15:31:22.084Z",
+        "durationMs": 9979,
         "metrics": {
           "lint_exit_code": 0,
           "typecheck_exit_code": 0,
@@ -25,11 +25,11 @@
             "status": "ok",
             "metrics": {
               "exit_code": 0,
-              "duration_ms": 3125
+              "duration_ms": 2972
             },
             "violations": [],
-            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T15-01-26-359Z-224ae9\\lint.stdout.txt",
-            "durationMs": 3127
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T15-31-12-095Z-b2953f\\lint.stdout.txt",
+            "durationMs": 2974
           },
           {
             "adapter": "typecheck",
@@ -37,11 +37,11 @@
             "status": "ok",
             "metrics": {
               "exit_code": 0,
-              "duration_ms": 7258
+              "duration_ms": 6985
             },
             "violations": [],
-            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T15-01-26-359Z-224ae9\\typecheck.stdout.txt",
-            "durationMs": 7260
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T15-31-12-095Z-b2953f\\typecheck.stdout.txt",
+            "durationMs": 6986
           },
           {
             "adapter": "module-size",
@@ -54,12 +54,12 @@
               "oversized_files": 0
             },
             "violations": [],
-            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T15-01-26-359Z-224ae9\\module-size.json",
-            "durationMs": 25
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T15-31-12-095Z-b2953f\\module-size.json",
+            "durationMs": 17
           }
         ],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
           "lab toolchain is healthy"
@@ -68,9 +68,9 @@
       {
         "scenarioId": "002-coverage",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:36.783Z",
-        "finishedAt": "2026-04-21T15:01:38.643Z",
-        "durationMs": 1860,
+        "startedAt": "2026-04-21T15:31:22.084Z",
+        "finishedAt": "2026-04-21T15:31:23.789Z",
+        "durationMs": 1705,
         "metrics": {
           "coverage_lines": 42.1,
           "coverage_branches": 100,
@@ -98,11 +98,11 @@
               }
             ],
             "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\fixtures\\low-coverage\\coverage\\coverage-summary.json",
-            "durationMs": 1859
+            "durationMs": 1704
           }
         ],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\002-coverage\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\002-coverage\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
           "lab proves a coverage drop: lines=42.1% (expected < 80%)"
@@ -111,8 +111,8 @@
       {
         "scenarioId": "003-dependency-structure",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:38.643Z",
-        "finishedAt": "2026-04-21T15:01:38.648Z",
+        "startedAt": "2026-04-21T15:31:23.789Z",
+        "finishedAt": "2026-04-21T15:31:23.794Z",
         "durationMs": 5,
         "metrics": {
           "files_scanned": 3,
@@ -136,12 +136,12 @@
                 "message": "cycle: fixtures/circular-deps/src/a.ts -> fixtures/circular-deps/src/b.ts -> fixtures/circular-deps/src/c.ts -> fixtures/circular-deps/src/a.ts"
               }
             ],
-            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\003-dependency-structure\\2026-04-21T15-01-26-359Z-224ae9\\dependency.json",
-            "durationMs": 4
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\003-dependency-structure\\2026-04-21T15-31-12-095Z-b2953f\\dependency.json",
+            "durationMs": 5
           }
         ],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\003-dependency-structure\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\003-dependency-structure\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
           "detected 1 cycle(s) (expected >= 1)"
@@ -150,8 +150,8 @@
       {
         "scenarioId": "004-cyclomatic-complexity",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:38.648Z",
-        "finishedAt": "2026-04-21T15:01:38.652Z",
+        "startedAt": "2026-04-21T15:31:23.794Z",
+        "finishedAt": "2026-04-21T15:31:23.798Z",
         "durationMs": 4,
         "metrics": {
           "functions_analyzed": 1,
@@ -181,12 +181,12 @@
                 }
               }
             ],
-            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\004-cyclomatic-complexity\\2026-04-21T15-01-26-359Z-224ae9\\complexity.json",
-            "durationMs": 3
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\004-cyclomatic-complexity\\2026-04-21T15-31-12-095Z-b2953f\\complexity.json",
+            "durationMs": 4
           }
         ],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\004-cyclomatic-complexity\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\004-cyclomatic-complexity\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
           "max complexity observed = 19 (expected > 12)"
@@ -195,8 +195,8 @@
       {
         "scenarioId": "005-module-sizes",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:38.652Z",
-        "finishedAt": "2026-04-21T15:01:38.654Z",
+        "startedAt": "2026-04-21T15:31:23.799Z",
+        "finishedAt": "2026-04-21T15:31:23.801Z",
         "durationMs": 2,
         "metrics": {
           "files_scanned": 1,
@@ -225,12 +225,12 @@
                 }
               }
             ],
-            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\005-module-sizes\\2026-04-21T15-01-26-359Z-224ae9\\module-size.json",
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\005-module-sizes\\2026-04-21T15-31-12-095Z-b2953f\\module-size.json",
             "durationMs": 2
           }
         ],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\005-module-sizes\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\005-module-sizes\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
           "oversized files = 1 (expected >= 1)"
@@ -239,9 +239,9 @@
       {
         "scenarioId": "006-mutation-testing",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:38.654Z",
-        "finishedAt": "2026-04-21T15:01:46.417Z",
-        "durationMs": 7763,
+        "startedAt": "2026-04-21T15:31:23.801Z",
+        "finishedAt": "2026-04-21T15:31:31.728Z",
+        "durationMs": 7927,
         "metrics": {
           "mutation_score": 0,
           "mutants_total": 5,
@@ -250,7 +250,7 @@
         },
         "adapters": [],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\006-mutation-testing\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\006-mutation-testing\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
           "surrogate mutation score = 0% (expected < 65%)"
@@ -259,8 +259,8 @@
       {
         "scenarioId": "007-tdd-loop",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:46.418Z",
-        "finishedAt": "2026-04-21T15:01:46.420Z",
+        "startedAt": "2026-04-21T15:31:31.728Z",
+        "finishedAt": "2026-04-21T15:31:31.730Z",
         "durationMs": 2,
         "metrics": {
           "before_mutation_score": 0,
@@ -269,7 +269,7 @@
         },
         "adapters": [],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\007-tdd-loop\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\007-tdd-loop\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
           "/tdd-loop moved mutation score 0 -> 100 (Δ 100)"
@@ -278,9 +278,9 @@
       {
         "scenarioId": "008-awesome-claude-token-stack",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:46.420Z",
-        "finishedAt": "2026-04-21T15:01:46.429Z",
-        "durationMs": 9,
+        "startedAt": "2026-04-21T15:31:31.730Z",
+        "finishedAt": "2026-04-21T15:31:31.740Z",
+        "durationMs": 10,
         "metrics": {
           "total_claims": 10,
           "passed_claims": 10,
@@ -288,7 +288,7 @@
         },
         "adapters": [],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\008-awesome-claude-token-stack\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\008-awesome-claude-token-stack\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
           "10/10 claims hold against https://github.com/michelbr84/awesome-claude-token-stack#main"
@@ -297,8 +297,8 @@
       {
         "scenarioId": "009-refactor-module",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:46.429Z",
-        "finishedAt": "2026-04-21T15:01:46.431Z",
+        "startedAt": "2026-04-21T15:31:31.740Z",
+        "finishedAt": "2026-04-21T15:31:31.742Z",
         "durationMs": 2,
         "metrics": {
           "before_max_module_lines": 350,
@@ -310,7 +310,7 @@
         },
         "adapters": [],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\009-refactor-module\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\009-refactor-module\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
           "/refactor-module moved max lines 350 → 118 (Δ 232), modules 1 → 4"
@@ -319,8 +319,8 @@
       {
         "scenarioId": "010-full-regression",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:46.432Z",
-        "finishedAt": "2026-04-21T15:01:46.434Z",
+        "startedAt": "2026-04-21T15:31:31.742Z",
+        "finishedAt": "2026-04-21T15:31:31.744Z",
         "durationMs": 2,
         "metrics": {
           "baseline_score": 100,
@@ -330,32 +330,32 @@
         },
         "adapters": [],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\010-full-regression\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\010-full-regression\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
-          "baseline 2026-04-21T14-53-56-863Z-d3ddf6: score=100, 11 scenarios, 0 failing, 0 missing"
+          "baseline 2026-04-21T15-01-26-359Z-224ae9: score=100, 11 scenarios, 0 failing, 0 missing"
         ]
       },
       {
         "scenarioId": "011-lab-mutation-score",
         "status": "pass",
-        "startedAt": "2026-04-21T15:01:46.434Z",
-        "finishedAt": "2026-04-21T15:01:46.436Z",
+        "startedAt": "2026-04-21T15:31:31.745Z",
+        "finishedAt": "2026-04-21T15:31:31.747Z",
         "durationMs": 2,
         "metrics": {
-          "mutation_score": 54.51,
-          "effective_mutation_score": 61.48,
-          "mutants_total": 1675,
-          "mutants_killed": 913,
-          "mutants_survived": 572
+          "mutation_score": 59.18,
+          "effective_mutation_score": 66.93,
+          "mutants_total": 1840,
+          "mutants_killed": 1089,
+          "mutants_survived": 538
         },
         "adapters": [],
         "evidencePaths": [
-          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\011-lab-mutation-score\\2026-04-21T15-01-26-359Z-224ae9"
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\011-lab-mutation-score\\2026-04-21T15-31-12-095Z-b2953f"
         ],
         "notes": [
-          "mutation score 54.51% (effective 61.48%) — floor is 50%",
-          "weakest files: apps/cli/src/compare.ts (0%), apps/runner/src/load-scenarios.ts (0%), packages/reporting/src/markdown.ts (25.42%)"
+          "mutation score 59.18% (effective 66.93%) — floors: 55% total / 60% effective",
+          "weakest files: apps/api/src/bin.ts (0%), apps/cli/src/compare.ts (0%), apps/runner/src/load-scenarios.ts (0%)"
         ]
       }
     ],
