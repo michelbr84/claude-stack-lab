@@ -105,6 +105,12 @@ jobs:
       - name: Scenario 008 (awesome-claude-token-stack)
         run: cd apps/cli && node --import=tsx src/bin.ts run 008-awesome-claude-token-stack --cwd "$GITHUB_WORKSPACE"
 
+      - name: Scenario 009 (refactor-module manifest)
+        run: cd apps/cli && node --import=tsx src/bin.ts run 009-refactor-module --cwd "$GITHUB_WORKSPACE"
+
+      - name: Scenario 010 (full regression gate)
+        run: cd apps/cli && node --import=tsx src/bin.ts run 010-full-regression --cwd "$GITHUB_WORKSPACE"
+
       - name: Run all (single combined report)
         run: cd apps/cli && node --import=tsx src/bin.ts run all --cwd "$GITHUB_WORKSPACE"
 
