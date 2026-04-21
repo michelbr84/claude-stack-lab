@@ -16,11 +16,14 @@ import { promises as fs } from 'node:fs';
  * score, tighten the threshold in the same PR.
  */
 
-// V1 floor. Current baseline is 54.51 — we set the bar a few points
-// below that so normal variation does not red the gate, but still
-// enough that any meaningful regression (say, a weakened test) is
-// caught.
-const MIN_SCORE = 50;
+// V1 floors. Current baseline is 59.18 (total) / 66.93 (effective).
+// We set the bar a few points below so normal variation does not red
+// the gate, but still high enough that a weakened test is caught.
+// The effective score reflects the V1 ROADMAP target (≥ 65 %);
+// we keep a 5-point buffer for now (60) and intend to raise it as
+// tests strengthen further.
+const MIN_SCORE = 55;
+const MIN_EFFECTIVE = 60;
 
 interface Summary {
   generatedAt: string;
@@ -45,7 +48,10 @@ export const scenario011: Scenario = {
     'pnpm test:mutation && node scripts/refresh-mutation-summary.mjs && commit evidence/snapshots/lab-mutation/',
   expectedResult: {
     status: 'pass',
-    metricThresholds: [{ metric: 'mutation_score', operator: '>=', value: MIN_SCORE }]
+    metricThresholds: [
+      { metric: 'mutation_score', operator: '>=', value: MIN_SCORE },
+      { metric: 'effective_mutation_score', operator: '>=', value: MIN_EFFECTIVE }
+    ]
   },
   minimumEvidence: [
     {
@@ -90,18 +96,28 @@ export const scenario011: Scenario = {
 
     await writeJson(join(ctx.evidenceDir, 'mutation-summary.json'), summary);
 
+    const commonMetrics: Record<string, number> = {
+      mutation_score: score,
+      effective_mutation_score: effective,
+      mutants_total: summary.totals.total,
+      mutants_killed: summary.totals.killed,
+      mutants_survived: summary.totals.survived
+    };
+
     if (score < MIN_SCORE) {
       return fail(
         this.id,
         ctx.evidenceDir,
         `mutation score ${score}% < floor ${MIN_SCORE}%`,
-        {
-          mutation_score: score,
-          effective_mutation_score: effective,
-          mutants_total: summary.totals.total,
-          mutants_killed: summary.totals.killed,
-          mutants_survived: summary.totals.survived
-        }
+        commonMetrics
+      );
+    }
+    if (effective < MIN_EFFECTIVE) {
+      return fail(
+        this.id,
+        ctx.evidenceDir,
+        `effective mutation score ${effective}% < floor ${MIN_EFFECTIVE}%`,
+        commonMetrics
       );
     }
 
@@ -127,7 +143,7 @@ export const scenario011: Scenario = {
       adapters: [],
       evidencePaths: [ctx.evidenceDir],
       notes: [
-        `mutation score ${score}% (effective ${effective}%) — floor is ${MIN_SCORE}%`,
+        `mutation score ${score}% (effective ${effective}%) — floors: ${MIN_SCORE}% total / ${MIN_EFFECTIVE}% effective`,
         `weakest files: ${weakest.join(', ')}`
       ]
     };

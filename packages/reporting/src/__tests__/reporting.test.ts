@@ -83,15 +83,55 @@ describe('json report', () => {
 });
 
 describe('markdown report', () => {
-  it('renders a header, scenarios table, and per-category table', () => {
+  it('produces the exact expected markdown for a canonical input', () => {
     const md = renderMarkdownReport(sampleRun, sampleScore);
-    expect(md).toContain('# claude-stack-lab — run');
-    expect(md).toContain('| `001-bootstrap` | `pass`');
-    expect(md).toContain('| `bootstrap` | 100');
-    expect(md).toContain('## Metrics');
+    const expected = [
+      '# claude-stack-lab — run 2026-04-21T09-30-00-000Z-aaaaaa',
+      '',
+      '- **Started**: 2026-04-21T09:30:00.000Z',
+      '- **Finished**: 2026-04-21T09:30:01.000Z',
+      '- **Duration**: 1000 ms',
+      '- **Global status**: `pass`',
+      '- **Global score**: `100` / 100',
+      '',
+      '## Scenarios',
+      '',
+      '| ID | Status | Score | Notes |',
+      '|---|---|---|---|',
+      '| `001-bootstrap` | `pass` | 100 | all expectations met |',
+      '',
+      '## By category',
+      '',
+      '| Category | Score | Passed | Failed | Total |',
+      '|---|---|---|---|---|',
+      '| `bootstrap` | 100 | 1 | 0 | 1 |',
+      '',
+      '## Metrics',
+      '',
+      '### `001-bootstrap`',
+      '',
+      '| Metric | Value |',
+      '|---|---|',
+      '| x | 1 |',
+      '',
+      '**Adapters:**',
+      '- `lint` → `ok` (0 violations)',
+      ''
+    ].join('\n');
+    expect(md).toBe(expected);
   });
 
-  it('includes failure reason when present', () => {
+  it('renders _(no metrics)_ for a scenario with no metrics', () => {
+    const emptyMetricsRun: RunReport = {
+      ...sampleRun,
+      scenarios: [{ ...sampleRun.scenarios[0]!, metrics: {}, adapters: [] }]
+    };
+    const md = renderMarkdownReport(emptyMetricsRun, sampleScore);
+    expect(md).toContain('_(no metrics)_');
+    expect(md).not.toContain('| Metric | Value |');
+  });
+
+  it('includes the failure reason block when present', () => {
     const failingRun: RunReport = {
       ...sampleRun,
       scenarios: [
@@ -104,13 +144,43 @@ describe('markdown report', () => {
       status: 'fail',
       perScenario: [{ ...sampleScore.perScenario[0]!, status: 'fail', score: 0 }]
     };
-    expect(renderMarkdownReport(failingRun, failingScore)).toContain('Failure reason');
+    const md = renderMarkdownReport(failingRun, failingScore);
+    expect(md).toContain('> **Failure reason**: because reasons');
+    expect(md).toContain('- **Global status**: `fail`');
+    expect(md).toContain('- **Global score**: `0` / 100');
   });
 
-  it('writes the markdown to disk', async () => {
+  it('escapes pipe characters and newlines in the scenario rationale', () => {
+    const dirtyScore: GlobalScore = {
+      ...sampleScore,
+      perScenario: [
+        { ...sampleScore.perScenario[0]!, rationale: 'uses |pipes|\nand\nnewlines' }
+      ]
+    };
+    const md = renderMarkdownReport(sampleRun, dirtyScore);
+    // pipes become escaped, newlines collapse to spaces
+    expect(md).toContain('uses \\|pipes\\| and newlines');
+    // No *unescaped* pipe inside the rationale cell — 5 table
+    // delimiters plus 2 escaped \| inside the cell = 7 | characters
+    // total, but the escaped ones are preceded by \.
+    const scenarioRow = md.split('\n').find((l) => l.startsWith('| `001-bootstrap`')) ?? '';
+    expect(scenarioRow.match(/\\\|/g)?.length).toBe(2);
+    // Split on unescaped |: (?<!\\) is a negative lookbehind.
+    const cells = scenarioRow.split(/(?<!\\)\|/);
+    // 6 pieces: "", `001-bootstrap`, `pass`, 100, rationale, ""
+    expect(cells).toHaveLength(6);
+  });
+
+  it('sample markdown never contains the Stryker sentinel', () => {
+    const md = renderMarkdownReport(sampleRun, sampleScore);
+    expect(md).not.toContain('Stryker was here!');
+  });
+
+  it('writes the exact rendered markdown to disk', async () => {
     const path = join(workdir, 'report.md');
     await writeMarkdownReport(path, sampleRun, sampleScore);
-    expect((await fs.readFile(path, 'utf8')).startsWith('# claude-stack-lab')).toBe(true);
+    const text = await fs.readFile(path, 'utf8');
+    expect(text).toBe(renderMarkdownReport(sampleRun, sampleScore));
   });
 });
 
