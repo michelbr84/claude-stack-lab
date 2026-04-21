@@ -48,26 +48,30 @@ jobs:
       - name: Promote the fresh run to baseline-run.json
         id: promote
         run: |
-          latest=$(ls -1 evidence/json/*.json | sort | tail -1)
+          latest=$(find evidence/json -maxdepth 1 -name '*.json' -type f -printf '%f\n' | sort | tail -1)
           if [ -z "$latest" ]; then
             echo "no run json produced"; exit 1
           fi
+          latest="evidence/json/$latest"
           cp "$latest" evidence/snapshots/baseline-run.json
-          # Extract score + status for the PR body
           score=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$latest','utf8')).score.score)")
           status=$(node -e "console.log(JSON.parse(require('fs').readFileSync('$latest','utf8')).score.status)")
-          echo "score=$score" >> "$GITHUB_OUTPUT"
-          echo "status=$status" >> "$GITHUB_OUTPUT"
-          echo "run=$(basename "$latest" .json)" >> "$GITHUB_OUTPUT"
+          run_id="$(basename "$latest" .json)"
+          {
+            echo "score=$score"
+            echo "status=$status"
+            echo "run=$run_id"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Detect changes
         id: diff
         run: |
           if git diff --quiet evidence/snapshots/baseline-run.json; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+            changed="false"
           else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
+            changed="true"
           fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
 
       - name: Open PR when baseline moved
         if: steps.diff.outputs.changed == 'true'
