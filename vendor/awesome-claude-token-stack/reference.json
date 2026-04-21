@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "upstream": {
+    "url": "https://github.com/michelbr84/awesome-claude-token-stack",
+    "branch": "main",
+    "knownVersionAtBlueprintTime": "0.1.0"
+  },
+  "expected": {
+    "libraries": ["@acts/compress", "@acts/sandbox", "@acts/observe", "@acts/memory"],
+    "cliBinaries": ["acts", "acts-mcp"],
+    "topLevelDirs": ["packages"],
+    "license": "MIT",
+    "language": "typescript",
+    "storage": "sqlite"
+  },
+  "rationale": "These are the load-bearing claims from the upstream README. Scenario 008 fails when any of them is no longer true; that failure is meaningful information, not noise."
+}

@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@lab/shared": ["../../packages/shared/src/index.ts"],
+      "@lab/scenario-core": ["../../packages/scenario-core/src/index.ts"],
+      "@lab/runner": ["../runner/src/index.ts"],
+      "@lab/scoring-engine": ["../../packages/scoring-engine/src/index.ts"],
+      "@lab/reporting": ["../../packages/reporting/src/index.ts"],
+      "@lab/adapters": ["../../packages/adapters/src/index.ts"]
+    },
+    "baseUrl": "."
+  },
+  "include": [
+    "src/**/*",
+    "../../packages/shared/src/**/*",
+    "../../packages/scenario-core/src/**/*",
+    "../../packages/scoring-engine/src/**/*",
+    "../../packages/reporting/src/**/*",
+    "../../packages/adapters/src/**/*",
+    "../runner/src/**/*"
+  ]
+}

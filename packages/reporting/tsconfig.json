@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@lab/shared": ["../shared/src/index.ts"],
+      "@lab/scoring-engine": ["../scoring-engine/src/index.ts"]
+    },
+    "baseUrl": "."
+  },
+  "include": ["src/**/*", "../shared/src/**/*", "../scoring-engine/src/**/*"]
+}

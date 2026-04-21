@@ -1,0 +1,7 @@
+{
+  "name": "@fixture/circular-deps",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Three files in a circular import chain. Drives scenario 003."
+}

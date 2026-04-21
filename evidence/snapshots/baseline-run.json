@@ -1,0 +1,414 @@
+{
+  "schemaVersion": 1,
+  "run": {
+    "runId": "2026-04-21T13-57-30-242Z-5b83dc",
+    "startedAt": "2026-04-21T13:57:30.243Z",
+    "finishedAt": "2026-04-21T13:57:51.314Z",
+    "durationMs": 21071,
+    "scenarios": [
+      {
+        "scenarioId": "001-bootstrap",
+        "status": "pass",
+        "startedAt": "2026-04-21T13:57:30.252Z",
+        "finishedAt": "2026-04-21T13:57:40.805Z",
+        "durationMs": 10553,
+        "metrics": {
+          "lint_exit_code": 0,
+          "typecheck_exit_code": 0,
+          "max_module_lines": 249,
+          "oversized_files": 0
+        },
+        "adapters": [
+          {
+            "adapter": "lint",
+            "toolVersion": null,
+            "status": "ok",
+            "metrics": {
+              "exit_code": 0,
+              "duration_ms": 2944
+            },
+            "violations": [],
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T13-57-30-242Z-5b83dc\\lint.stdout.txt",
+            "durationMs": 2946
+          },
+          {
+            "adapter": "typecheck",
+            "toolVersion": null,
+            "status": "ok",
+            "metrics": {
+              "exit_code": 0,
+              "duration_ms": 7579
+            },
+            "violations": [],
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T13-57-30-242Z-5b83dc\\typecheck.stdout.txt",
+            "durationMs": 7581
+          },
+          {
+            "adapter": "module-size",
+            "toolVersion": "inline-1.0",
+            "status": "ok",
+            "metrics": {
+              "files_scanned": 35,
+              "max_module_lines": 249,
+              "total_lines": 1892,
+              "oversized_files": 0
+            },
+            "violations": [],
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T13-57-30-242Z-5b83dc\\module-size.json",
+            "durationMs": 25
+          }
+        ],
+        "evidencePaths": [
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\001-bootstrap\\2026-04-21T13-57-30-242Z-5b83dc"
+        ],
+        "notes": [
+          "lab toolchain is healthy"
+        ]
+      },
+      {
+        "scenarioId": "002-coverage",
+        "status": "pass",
+        "startedAt": "2026-04-21T13:57:40.806Z",
+        "finishedAt": "2026-04-21T13:57:43.044Z",
+        "durationMs": 2238,
+        "metrics": {
+          "coverage_lines": 42.1,
+          "coverage_branches": 100,
+          "coverage_functions": 16.66,
+          "coverage_statements": 42.1,
+          "exit_code": 0
+        },
+        "adapters": [
+          {
+            "adapter": "coverage",
+            "toolVersion": null,
+            "status": "violation",
+            "metrics": {
+              "coverage_lines": 42.1,
+              "coverage_branches": 100,
+              "coverage_functions": 16.66,
+              "coverage_statements": 42.1,
+              "exit_code": 0
+            },
+            "violations": [
+              {
+                "rule": "coverage-lines-below-threshold",
+                "severity": "error",
+                "message": "lines coverage 42.1% < 80%"
+              }
+            ],
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\fixtures\\low-coverage\\coverage\\coverage-summary.json",
+            "durationMs": 2238
+          }
+        ],
+        "evidencePaths": [
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\002-coverage\\2026-04-21T13-57-30-242Z-5b83dc"
+        ],
+        "notes": [
+          "lab proves a coverage drop: lines=42.1% (expected < 80%)"
+        ]
+      },
+      {
+        "scenarioId": "003-dependency-structure",
+        "status": "pass",
+        "startedAt": "2026-04-21T13:57:43.045Z",
+        "finishedAt": "2026-04-21T13:57:43.051Z",
+        "durationMs": 6,
+        "metrics": {
+          "files_scanned": 3,
+          "edges": 3,
+          "cycles": 1
+        },
+        "adapters": [
+          {
+            "adapter": "dependency",
+            "toolVersion": "inline-1.0",
+            "status": "violation",
+            "metrics": {
+              "files_scanned": 3,
+              "edges": 3,
+              "cycles": 1
+            },
+            "violations": [
+              {
+                "rule": "circular-dependency",
+                "severity": "error",
+                "message": "cycle: fixtures/circular-deps/src/a.ts -> fixtures/circular-deps/src/b.ts -> fixtures/circular-deps/src/c.ts -> fixtures/circular-deps/src/a.ts"
+              }
+            ],
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\003-dependency-structure\\2026-04-21T13-57-30-242Z-5b83dc\\dependency.json",
+            "durationMs": 6
+          }
+        ],
+        "evidencePaths": [
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\003-dependency-structure\\2026-04-21T13-57-30-242Z-5b83dc"
+        ],
+        "notes": [
+          "detected 1 cycle(s) (expected >= 1)"
+        ]
+      },
+      {
+        "scenarioId": "004-cyclomatic-complexity",
+        "status": "pass",
+        "startedAt": "2026-04-21T13:57:43.051Z",
+        "finishedAt": "2026-04-21T13:57:43.055Z",
+        "durationMs": 5,
+        "metrics": {
+          "functions_analyzed": 1,
+          "max_complexity": 19,
+          "avg_complexity": 19,
+          "complex_functions": 1
+        },
+        "adapters": [
+          {
+            "adapter": "complexity",
+            "toolVersion": "inline-1.0",
+            "status": "violation",
+            "metrics": {
+              "functions_analyzed": 1,
+              "max_complexity": 19,
+              "avg_complexity": 19,
+              "complex_functions": 1
+            },
+            "violations": [
+              {
+                "rule": "cyclomatic-complexity",
+                "severity": "error",
+                "message": "fixtures/high-complexity/src/complex.ts:1 classify has complexity 19 (max 12)",
+                "location": {
+                  "file": "fixtures/high-complexity/src/complex.ts",
+                  "line": 1
+                }
+              }
+            ],
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\004-cyclomatic-complexity\\2026-04-21T13-57-30-242Z-5b83dc\\complexity.json",
+            "durationMs": 4
+          }
+        ],
+        "evidencePaths": [
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\004-cyclomatic-complexity\\2026-04-21T13-57-30-242Z-5b83dc"
+        ],
+        "notes": [
+          "max complexity observed = 19 (expected > 12)"
+        ]
+      },
+      {
+        "scenarioId": "005-module-sizes",
+        "status": "pass",
+        "startedAt": "2026-04-21T13:57:43.056Z",
+        "finishedAt": "2026-04-21T13:57:43.058Z",
+        "durationMs": 2,
+        "metrics": {
+          "files_scanned": 1,
+          "max_module_lines": 350,
+          "total_lines": 350,
+          "oversized_files": 1
+        },
+        "adapters": [
+          {
+            "adapter": "module-size",
+            "toolVersion": "inline-1.0",
+            "status": "violation",
+            "metrics": {
+              "files_scanned": 1,
+              "max_module_lines": 350,
+              "total_lines": 350,
+              "oversized_files": 1
+            },
+            "violations": [
+              {
+                "rule": "max-lines",
+                "severity": "error",
+                "message": "fixtures/large-modules/src/oversized.ts has 350 lines (max 300)",
+                "location": {
+                  "file": "fixtures/large-modules/src/oversized.ts"
+                }
+              }
+            ],
+            "rawArtifactPath": "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\005-module-sizes\\2026-04-21T13-57-30-242Z-5b83dc\\module-size.json",
+            "durationMs": 2
+          }
+        ],
+        "evidencePaths": [
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\005-module-sizes\\2026-04-21T13-57-30-242Z-5b83dc"
+        ],
+        "notes": [
+          "oversized files = 1 (expected >= 1)"
+        ]
+      },
+      {
+        "scenarioId": "006-mutation-testing",
+        "status": "pass",
+        "startedAt": "2026-04-21T13:57:43.059Z",
+        "finishedAt": "2026-04-21T13:57:51.303Z",
+        "durationMs": 8244,
+        "metrics": {
+          "mutation_score": 0,
+          "mutants_total": 5,
+          "mutants_killed": 0,
+          "mutants_survived": 5
+        },
+        "adapters": [],
+        "evidencePaths": [
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\006-mutation-testing\\2026-04-21T13-57-30-242Z-5b83dc"
+        ],
+        "notes": [
+          "surrogate mutation score = 0% (expected < 65%)"
+        ]
+      },
+      {
+        "scenarioId": "007-tdd-loop",
+        "status": "pass",
+        "startedAt": "2026-04-21T13:57:51.304Z",
+        "finishedAt": "2026-04-21T13:57:51.305Z",
+        "durationMs": 1,
+        "metrics": {
+          "before_mutation_score": 0,
+          "after_mutation_score": 100,
+          "mutation_score_delta": 100
+        },
+        "adapters": [],
+        "evidencePaths": [
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\007-tdd-loop\\2026-04-21T13-57-30-242Z-5b83dc"
+        ],
+        "notes": [
+          "/tdd-loop moved mutation score 0 -> 100 (Δ 100)"
+        ]
+      },
+      {
+        "scenarioId": "008-awesome-claude-token-stack",
+        "status": "pass",
+        "startedAt": "2026-04-21T13:57:51.306Z",
+        "finishedAt": "2026-04-21T13:57:51.314Z",
+        "durationMs": 8,
+        "metrics": {
+          "total_claims": 10,
+          "passed_claims": 10,
+          "failed_claims": 0
+        },
+        "adapters": [],
+        "evidencePaths": [
+          "G:\\Projetos\\claude-stack-lab\\evidence\\raw\\008-awesome-claude-token-stack\\2026-04-21T13-57-30-242Z-5b83dc"
+        ],
+        "notes": [
+          "10/10 claims hold against https://github.com/michelbr84/awesome-claude-token-stack#main"
+        ]
+      }
+    ],
+    "globalScore": 100,
+    "globalStatus": "pass"
+  },
+  "score": {
+    "score": 100,
+    "status": "pass",
+    "perScenario": [
+      {
+        "scenarioId": "001-bootstrap",
+        "category": "bootstrap",
+        "status": "pass",
+        "score": 100,
+        "rationale": "all expectations met"
+      },
+      {
+        "scenarioId": "002-coverage",
+        "category": "coverage",
+        "status": "pass",
+        "score": 100,
+        "rationale": "all expectations met"
+      },
+      {
+        "scenarioId": "003-dependency-structure",
+        "category": "dependency-structure",
+        "status": "pass",
+        "score": 100,
+        "rationale": "all expectations met"
+      },
+      {
+        "scenarioId": "004-cyclomatic-complexity",
+        "category": "complexity",
+        "status": "pass",
+        "score": 100,
+        "rationale": "all expectations met"
+      },
+      {
+        "scenarioId": "005-module-sizes",
+        "category": "module-size",
+        "status": "pass",
+        "score": 100,
+        "rationale": "all expectations met"
+      },
+      {
+        "scenarioId": "006-mutation-testing",
+        "category": "mutation",
+        "status": "pass",
+        "score": 100,
+        "rationale": "all expectations met"
+      },
+      {
+        "scenarioId": "007-tdd-loop",
+        "category": "cmp-validation",
+        "status": "pass",
+        "score": 100,
+        "rationale": "all expectations met"
+      },
+      {
+        "scenarioId": "008-awesome-claude-token-stack",
+        "category": "cmp-validation",
+        "status": "pass",
+        "score": 100,
+        "rationale": "all expectations met"
+      }
+    ],
+    "perCategory": [
+      {
+        "category": "bootstrap",
+        "score": 100,
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "category": "cmp-validation",
+        "score": 100,
+        "total": 2,
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "category": "complexity",
+        "score": 100,
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "category": "coverage",
+        "score": 100,
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "category": "dependency-structure",
+        "score": 100,
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "category": "module-size",
+        "score": 100,
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "category": "mutation",
+        "score": 100,
+        "total": 1,
+        "passed": 1,
+        "failed": 0
+      }
+    ]
+  }
+}

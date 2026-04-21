@@ -1,0 +1,17 @@
+{
+  "skill": "/tdd-loop",
+  "prompt": "Strengthen fixtures/mutation-survivors/src/arithmetic.test.ts so that the surrogate mutation in scenario 006 finds zero survivors. Do not change arithmetic.ts.",
+  "fixture": "mutation-survivors",
+  "metrics": {
+    "beforeMutationScore": 0,
+    "afterMutationScore": 100
+  },
+  "diff": "evidence/snapshots/007-tdd-loop/strengthened.arithmetic.test.ts",
+  "recordedAt": "2026-04-21T13:55:00.000Z",
+  "notes": [
+    "Recorded by claude-stack-lab Wave 1 scaffold under /max-power autonomous mode.",
+    "The before measurement comes from the canonical run of scenario 006 against the original weak suite (mutants_total=5, mutants_killed=0).",
+    "The after measurement comes from the strengthened.arithmetic.test.ts file in this snapshot dir; applying it temporarily and re-running the surrogate mutation kills every mutant (5/5).",
+    "The fixture is intentionally NOT updated so scenario 006 keeps proving the lab detects weak suites."
+  ]
+}

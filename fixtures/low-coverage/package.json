@@ -1,0 +1,11 @@
+{
+  "name": "@fixture/low-coverage",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Six exported fns; only one is tested. Drives scenario 002.",
+  "scripts": {
+    "test": "vitest run --config vitest.config.ts",
+    "test:coverage": "vitest run --config vitest.config.ts --coverage"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "@fixture/high-complexity",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Single function with intentionally high cyclomatic complexity. Drives scenario 004."
+}
